@@ -1,1 +1,106 @@
-<iframe title="业务员" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYzk1YTAxOTctNjY5Mi00ZDhmLThmOTAtNTk4M2RmYzkxNzA3IiwidCI6IjZmMGJiNzJmLTUzNzctNGRkZi05MzZhLWI2YzcyYmYyMWFlMiIsImMiOjF9" frameborder="0" allowFullScreen="true"></iframe>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>业务员报表</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background: #f5f7fa;
+    }
+    .report-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+    .report-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #eee;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+    .iframe-wrapper {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 比例 */
+      height: 0;
+    }
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      transition: opacity 0.3s ease;
+    }
+    .loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.8);
+      color: #666;
+      font-size: 14px;
+      z-index: 10;
+    }
+    .error {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: #fff3f3;
+      color: #d9534f;
+      font-size: 14px;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="report-container">
+    <div class="report-header">业务员报表</div>
+    <div class="iframe-wrapper">
+      <div class="loading">报表加载中...</div>
+      <div class="error">报表加载失败，请刷新页面重试</div>
+      <iframe 
+        title="业务员" 
+        src="https://app.powerbi.com/view?r=eyJrIjoiYzk1YTAxOTctNjY5Mi00ZDhmLThmOTAtNTk4M2RmYzkxNzA3IiwidCI6IjZmMGJiNzJmLTUzNzctNGRkZi05MzZhLWI2YzcyYmYyMWFlMiIsImMiOjF9&pageName=7fd79daae4c7e1cd5d68" 
+        allowfullscreen
+        onload="this.previousElementSibling.previousElementSibling.style.display='none'">
+      </iframe>
+    </div>
+  </div>
+
+  <script>
+    // 监控 iframe 加载错误
+    document.querySelector('iframe').addEventListener('error', function() {
+      document.querySelector('.loading').style.display = 'none';
+      document.querySelector('.error').style.display = 'flex';
+    });
+
+    // 超时检测（可选）
+    setTimeout(function() {
+      const loading = document.querySelector('.loading');
+      if (loading && loading.style.display !== 'none') {
+        loading.textContent = '加载超时，可能网络较慢...';
+      }
+    }, 15000);
+  </script>
+
+</body>
+</html>
